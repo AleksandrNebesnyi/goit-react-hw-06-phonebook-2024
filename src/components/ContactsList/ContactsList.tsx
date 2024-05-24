@@ -1,16 +1,31 @@
 import css from './ContactsList.module.css';
 import { ContactItem } from '../ContactItem/ContactItem';
-interface IContact {
+import { useDispatch,useSelector } from 'react-redux';
+import {getfilteredContacts} from '../../redax/contacts/contacts-selector';
+import {deleteContact} from '../../redax/contacts/contacts-slice'
+
+
+interface IContact {  
   id: string;
   name: string;
   number: string;
 }
-interface IProps {
-  contacts: IContact[];
-  onDeleteContact: (id: string) => void;
-}
 
-export const ContactsList = ({ contacts, onDeleteContact }:IProps) => {
+type typeOnDeleteContact= (id: string) => void;
+
+
+export const ContactsList = () => {
+
+const contacts:IContact[] = useSelector(getfilteredContacts);
+const dispatch = useDispatch();
+
+const onDeleteContact:typeOnDeleteContact = (id:string) => {
+
+
+  dispatch(deleteContact(id));
+};
+
+
   return (
     <ul className={css.list}>
       {contacts.map(({ id, name, number }) => (
@@ -19,7 +34,7 @@ export const ContactsList = ({ contacts, onDeleteContact }:IProps) => {
           id={id}
           name={name}
           number={number}
-          deleteContact={onDeleteContact}
+          deleteContact={() => onDeleteContact(id)}
         />
       ))}
     </ul>

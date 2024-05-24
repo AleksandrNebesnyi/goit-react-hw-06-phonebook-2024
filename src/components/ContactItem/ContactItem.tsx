@@ -4,10 +4,10 @@ interface IProps {
   id: string;
   name: string;
   number: string;
-  deleteContact: (id: string) => void;
+  deleteContact: () => void;
 };
 
-export const ContactItem = ({ id, name, number, deleteContact }: IProps) => {
+export const ContactItem = ({ name, number, deleteContact }: IProps) => {
   return (
     <li className={css.listItem}>
       <p className={css.itemText}>
@@ -17,7 +17,7 @@ export const ContactItem = ({ id, name, number, deleteContact }: IProps) => {
       <button
         type="button"
         className="btn btn-outline-primary"
-        onClick={() => deleteContact(id)}
+        onClick={ deleteContact}
       >
         Delete
       </button>

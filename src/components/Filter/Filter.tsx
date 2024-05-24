@@ -1,11 +1,20 @@
 import React, { ChangeEvent } from 'react';
-// Типизируем пропсы
-interface IProps {
-  onFilterChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-}
+import { useDispatch,useSelector } from 'react-redux';
+import {getFilter} from '../../redax/contacts/contacts-selector';
+import {changeFilter} from '../../redax/contacts/filter-slice';
 
-export const Filter = ({ onFilterChange, value }:IProps) => {
+
+
+export const Filter = () => {
+ 
+  const filterValue:string=useSelector(getFilter);
+  const dispatch=useDispatch();
+
+  const onFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeFilter(e.currentTarget.value));
+  };
+
+
   return (
     <>
       <div className="col-md-6">
@@ -16,7 +25,7 @@ export const Filter = ({ onFilterChange, value }:IProps) => {
           placeholder=" Search contact ..."
           aria-label=".form-control-lg example"
           name="filter"
-          value={value}
+          value={filterValue}
           onChange={onFilterChange}
         ></input>
       </div>
